@@ -16,3 +16,7 @@ class Article(models.Model):
 	publication_date = models.DateField()
 	content = models.TextField()
 	url = models.URLField(null=True)
+	title = models.TextField(default=None)
+	image = models.TextField(default=None)
+
+	
