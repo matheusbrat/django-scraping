@@ -4,12 +4,12 @@ from rest_framework import serializers, viewsets
 class OutletSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Outlet
-		fields = ('name', 'url', 'description')
+		fields = ('id', 'name', 'url', 'description')
 
 class WriterSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Writer
-		fields = ('name', 'twitter', 'profile')
+		fields = ('id', 'name', 'twitter', 'profile')
 
 class ArticleSerializer(serializers.ModelSerializer):
 	writers = WriterSerializer(many=True, read_only=True)
@@ -17,4 +17,4 @@ class ArticleSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Article
 
-		fields = ('writers', 'outlet', 'publication_date', 'content', 'url', 'title', 'image')
+		fields = ('id', 'writers', 'outlet', 'publication_date', 'content', 'url', 'title', 'image')
