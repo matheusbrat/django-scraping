@@ -55,6 +55,7 @@ class TechcrunchSpider(scrapy.Spider):
         if len(article) == 0:
           meta = dict()
           meta['outlet'] = outlet
+          log.msg("Registering " + link)
           yield Request(link, callback=self.parse_article, meta=meta)
         else:
           log.msg("Already have it on db " + link)
