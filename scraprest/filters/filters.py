@@ -1,5 +1,24 @@
-from scrapingapp.models  import Article
+from scrapingapp.models  import Outlet, Writer, Article
 import django_filters
+
+class OutletFilter(django_filters.FilterSet):
+	name = django_filters.CharFilter(name="name", lookup_type='icontains')
+	url = django_filters.CharFilter(name="url", lookup_type='icontains')
+	description = django_filters.CharFilter(name="description", lookup_type='icontains')
+
+	class Meta:
+		model = Outlet
+		fields = ('name', 'url', 'description')
+
+class WriterFilter(django_filters.FilterSet):
+	name = django_filters.CharFilter(name="name", lookup_type='icontains')
+	twitter = django_filters.CharFilter(name="twitter", lookup_type='icontains')
+	profile = django_filters.CharFilter(name="profile", lookup_type='icontains')
+
+	class Meta:
+		model = Writer
+		fields = ('name', 'twitter', 'profile')
+
 
 class ArticleFilter(django_filters.FilterSet):
 	title = django_filters.CharFilter(name="title", lookup_type='icontains')
