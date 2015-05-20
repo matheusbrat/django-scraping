@@ -18,5 +18,3 @@ class Article(models.Model):
 	url = models.URLField(null=True)
 	title = models.TextField(default=None)
 	image = models.TextField(default=None)
-
-	
