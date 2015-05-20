@@ -13,7 +13,7 @@ class Writer(models.Model):
 class Article(models.Model):
 	writers = models.ManyToManyField(Writer)
 	outlet = models.ForeignKey(Outlet)
-	publication_date = models.DateField()
+	publication_date = models.DateTimeField()
 	content = models.TextField()
 	url = models.URLField(null=True)
 	title = models.TextField(default=None)

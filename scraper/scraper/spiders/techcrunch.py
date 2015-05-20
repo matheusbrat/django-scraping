@@ -3,7 +3,6 @@ import django
 django.setup()
 
 import scrapy
-from scraper.items import OutletItem, WriterItem, ArticleItem
 from scrapingapp.models import Outlet, Writer, Article
 from scrapy.contrib.linkextractors.lxmlhtml import LxmlLinkExtractor
 from scrapy import Selector
@@ -39,7 +38,9 @@ class TechcrunchSpider(scrapy.Spider):
       for quantity in range(len(names)):
         name = names[quantity]
         url = urls[quantity]
-        twitter = twitters[quantity]
+        twitter = ""
+        if (len(twitter) >= quantity):
+          twitter = twitters[quantity]
         writer, created = Writer.objects.get_or_create(name=name, profile=self.start_urls[0] + url, twitter=twitter)  
         writers.append(writer)
       return writers
@@ -50,7 +51,7 @@ class TechcrunchSpider(scrapy.Spider):
 
       links = sel.xpath('//h2[@class="post-title"]/a/@href').extract()
       for link in links:
-        article = ArticleItem.django_model.objects.filter(url=link)
+        article = Article.objects.filter(url=link)
         if len(article) == 0:
           meta = dict()
           meta['outlet'] = outlet
@@ -68,8 +69,9 @@ class TechcrunchSpider(scrapy.Spider):
       content = ''.join(content)
       image = sel.xpath('//meta[@property="og:image"]/@content').extract()[0]
       publication_date = sel.xpath('//meta[@name="timestamp"]/@content').extract()[0]
-      log.msg(title);
-      log.msg(url);
-      log.msg(content);
-      log.msg(image);
-      log.msg(publication_date);
+      article = Article(title=title, url=url, content=content,image=image, publication_date=publication_date, outlet=response.meta['outlet'])
+      article.save()
+
+      for writer in writers:
+        article.writers.add(writer)
+      article.save()
