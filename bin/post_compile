@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
 
-# Init the DB.
-./manage.py initdb
-
 ./manage.py makemigrations
-# Run Django migrations.
 ./manage.py migrate
